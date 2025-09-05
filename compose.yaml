@@ -1,0 +1,28 @@
+
+version: "3.8"
+services:
+  backend:
+    build:
+      context: ../backend
+    environment:
+      NODE_ENV: production
+    ports:
+      - "3001:3001"
+
+  aiserver:
+    build:
+      context: ../AIServer
+    ports:
+      - "8000:8000"
+
+  frontend:
+    build:
+      context: ../frontend
+    environment:
+      NODE_ENV: production
+    ports:
+      - "3000:3000"
+
+# Example: Add volumes or networks if needed
+# volumes:
+#   db-data:
