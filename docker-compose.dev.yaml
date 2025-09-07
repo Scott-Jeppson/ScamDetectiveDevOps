@@ -1,0 +1,42 @@
+services:
+  backend:
+    build:
+      context: ../backend
+      dockerfile: Dockerfile.dev
+    environment:
+      NODE_ENV: development
+    volumes:
+      - ../backend:/app
+      - backend_node_modules:/app/node_modules
+    command: npm run dev
+    ports:
+      - "3001:3001"
+
+  aiserver:
+    build:
+      context: ../AIServer
+    environment:
+      HF_HOME: /app/hf_cache
+    env_file:
+      - ../AIserver/.env
+    volumes:
+      - ../AIServer:/app
+    ports:
+      - "8000:8000"
+
+  frontend:
+    build:
+      context: ../frontend
+      dockerfile: Dockerfile.dev
+    environment:
+      NODE_ENV: development
+    volumes:
+      - ../frontend:/app
+      - frontend_node_modules:/app/node_modules
+    command: npm run dev
+    ports:
+      - "3000:3000"
+
+volumes:
+  backend_node_modules:
+  frontend_node_modules:
